@@ -1,0 +1,31 @@
+name: Codium PR Agent
+
+on: [pull_request]
+
+jobs:
+  codium-pr-agent:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Flake8
+        run: flake8 example.py
+
+      - name: Run Pytest
+        run: pytest
+
+      - name: Run Codium PR Agent
+        uses: codium-ai/codium-pr-agent@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
