@@ -25,5 +25,3 @@ jobs:
         env:
           OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
           GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
-          PR_AGENT_MODEL: "gpt-3.5-turbo"  # Cambia el modelo a uno más accesible si es necesario
-          PR_AGENT_VERBOSITY: "debug"  # Aumenta la verbosidad para logs más detallados
