@@ -2,12 +2,6 @@
 model = "gpt-3.5-turbo"  # Cambia esto al modelo que deseas usar
 model_turbo = "gpt-3.5-turbo"
 
-[ignore]
-glob = ['*.py']  # Ignorar todos los archivos .py
-
-[regex]
-regex = ['.*\.py$']  # Ignorar todos los archivos .py usando regex
-
 [pr_description_prompt]
 system = """
     [SYSTEM] You are an AI reviewing a Pull Request...
