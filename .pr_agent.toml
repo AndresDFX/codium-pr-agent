@@ -2,6 +2,9 @@
 model = "huggingface/meta-llama/Llama-2-7b-chat-hf"  # Cambia esto al modelo de Hugging Face que desees usar
 model_turbo = "huggingface/meta-llama/Llama-2-7b-chat-hf"
 
+[__init__]
+MAX_TOKENS = { "huggingface/meta-llama/Llama-2-7b-chat-hf" = 4096 }
+
 [huggingface]
 key = "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"  # Reemplaza esto con tu clave de API de Hugging Face
 api_base = "https://api-inference.huggingface.co/models/"  # Base URL para los endpoints de Hugging Face
