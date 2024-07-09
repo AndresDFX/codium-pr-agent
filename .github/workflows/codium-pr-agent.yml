@@ -14,18 +14,16 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install dependencies
+      - name: Install pr-agent
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Run Flake8
-        run: flake8 example.py
-
-      - name: Run Pytest
-        run: pytest
+          pip install pr-agent
 
       - name: Run Codium PR Agent
-        uses: codium-ai/codium-pr-agent@v1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python run_pr_agent.py
+        env:
+          OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
+          GITHUB_USER_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          COMMAND: "/review"
