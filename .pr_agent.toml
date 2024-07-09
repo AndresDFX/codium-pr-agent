@@ -1,11 +1,7 @@
 [config]
-model = "gpt-3.5-turbo"  # Cambia esto al modelo que deseas usar
-model_turbo = "gpt-3.5-turbo"
+model = "huggingface/meta-llama/Llama-2-7b-chat-hf"  # Cambia esto al modelo de Hugging Face que desees usar
+model_turbo = "huggingface/meta-llama/Llama-2-7b-chat-hf"
 
-[pr_description_prompt]
-system = """
-    [SYSTEM] You are an AI reviewing a Pull Request...
-"""
-user = """
-    [USER] Please provide a detailed review of the following code changes...
-"""
+[huggingface]
+key = "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"  # Reemplaza esto con tu clave de API de Hugging Face
+api_base = "https://api-inference.huggingface.co/models/"  # Base URL para los endpoints de Hugging Face
