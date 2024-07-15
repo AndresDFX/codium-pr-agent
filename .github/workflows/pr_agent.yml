@@ -1,37 +1,40 @@
-name: Run PR Agent on every pull request and respond to user comments
+name: PR-Agent
 
 on:
   pull_request:
-    types: [opened, reopened, ready_for_review]
-  issue_comment:
-    types: [created]
+    types: [opened, reopened, ready_for_review, synchronize]
+  push:
+    branches:
+      - master
+    paths:
+      - '**.py'
 
 jobs:
-  pr_agent_job:
-    if: ${{ github.event.sender.type != 'Bot' }}
+  run-pr-agent:
     runs-on: ubuntu-latest
-    permissions:
-      issues: write
-      pull-requests: write
-      contents: write
-    name: Run PR Agent on every pull request and respond to user comments
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.10'  # Asegúrate de usar la versión de Python adecuada
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install -r requirements.txt
 
-      - name: Run PR Agent action step
-        id: pragent
-        run: python test.py  # Cambia esto a la ruta correcta de tu script
-        env:
-          HUGGINGFACE_API_KEY: ${{ secrets.HUGGINGFACE_API_KEY }}
-          GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+    - name: Run PR-Agent
+      env:
+        HUGGINGFACE_KEY: ${{ secrets.HUGGINGFACE_KEY }}
+        GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+        github_action_config.auto_review: "true"
+        github_action_config.auto_describe: "true"
+        github_action_config.auto_improve: "true"
+      run: |
+        python -m pr_agent.cli --pr_url=${{ github.event.pull_request.html_url }} describe
+        python -m pr_agent.cli --pr_url=${{ github.event.pull_request.html_url }} review
+        python -m pr_agent.cli --pr_url=${{ github.event.pull_request.html_url }} improve
