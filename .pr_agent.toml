@@ -1,8 +1,16 @@
+[github_app]
+pr_commands = [
+    "/describe --pr_description.final_update_message=false",
+    "/review --pr_reviewer.num_code_suggestions=0",
+    "/improve",
+]
+handle_push_trigger = true
+push_commands = [
+    "/describe",
+    "/review --pr_reviewer.num_code_suggestions=0 --pr_reviewer.final_update_message=false",
+]
+
 [config]
-model = "huggingface/meta-llama/Llama-2-7b-chat-hf"  # Cambia esto al modelo de Hugging Face que desees usar
+model = "huggingface/meta-llama/Llama-2-7b-chat-hf"
 model_turbo = "huggingface/meta-llama/Llama-2-7b-chat-hf"
-
-
-[huggingface]
-key = "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"  # Reemplaza esto con tu clave de API de Hugging Face
-api_base = "https://api-inference.huggingface.co/models/"  # Base URL para los endpoints de Hugging Face
+HUGGINGFACE = { key = "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", api_base = "https://api-inference.huggingface.co/models/" }
